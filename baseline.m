@@ -1,4 +1,4 @@
-function output = baseline(input,key) %enter a matrix and a string
+function output = baseline(input,key,majorMinor) %enter a matrix and a string
     pc = pitchClass(input);
     pc = transposeKey(pc,key);
     [row, ~] = size(pc);
@@ -18,17 +18,33 @@ function output = baseline(input,key) %enter a matrix and a string
         sum9 = sum(singleRow == 9);
         sum10 = sum(singleRow == 10);
         sum11 = sum(singleRow == 11);
-        countComp = zeros(1,7);  %7 different roman numeral given a key
-        countComp(1) = sum0 + sum4 + sum7;
-        countComp(2) = sum2 + sum5 +sum9;
-        countComp(3) = sum4 + sum7 + sum11;
-        countComp(4) = sum0 + sum5 + sum9;
-        countComp(5) = sum2 + sum7 + sum11;
-        countComp(6) = sum0 + sum4 + sum9;
-        countComp(7) = sum11 + sum2 + sum5;
-        index = [1 5 4 6 2 3 7];
-        sorted = countComp(index);
-        [maxCount, place] = max(sorted);
-        output(i) = place;        
+        countComp = zeros(1,7); 
+        if(majorMinor)
+            %7 different roman numeral given a key
+            countComp(1) = sum0 + sum4 + sum7;
+            countComp(2) = sum2 + sum5 +sum9;
+            countComp(3) = sum4 + sum7 + sum11;
+            countComp(4) = sum0 + sum5 + sum9;
+            countComp(5) = sum2 + sum7 + sum11;
+            countComp(6) = sum0 + sum4 + sum9;
+            countComp(7) = sum11 + sum2 + sum5;
+            index = [1 5 4 6 2 3 7];
+            sorted = countComp(index);
+            [maxCount, place] = max(sorted);
+            output(i) = index(place);
+        else
+            countComp(1) = sum0 + sum3 + sum7;
+            countComp(2) = sum2 + sum5 +sum8;
+            countComp(3) = sum3 + sum7 + sum10;
+            countComp(4) = sum0 + sum5 + sum8;
+            countComp(5) = sum2 + sum7 + sum11;
+            countComp(6) = sum0 + sum3 + sum8;
+            countComp(7) = sum11 + sum2 + sum5;
+            index = [1 5 3 2 6 4 7];
+            sorted = countComp(index);
+            [maxCount, place] = max(sorted);
+            output(i) = index(place); 
+        end
     end 
+    
 end
